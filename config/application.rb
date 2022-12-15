@@ -18,5 +18,8 @@ module TheBugSpaceBackend
     #
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
+
+    # Set Rails for API-only usage
+    config.api_only = true
   end
 end
