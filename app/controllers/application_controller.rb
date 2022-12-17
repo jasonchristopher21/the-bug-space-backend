@@ -6,9 +6,14 @@ class ApplicationController < ActionController::API
 
     private
 
+    # Authenticates a user by the Authorization header of the HTTP request.
+    # 
+    # If the user is not found in the record, or if the token in the Authorization
+    # header cannot be decoded, a reply containing the error message and an
+    # UNAUTHORIZED status will be rendered.
     def authenticate_user
+    
         header = request.headers['Authorization']
-        # header = header.split('').last if header
 
         begin
             @decoded = JwtToken.decode(header)
