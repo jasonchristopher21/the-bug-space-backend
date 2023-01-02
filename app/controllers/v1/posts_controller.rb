@@ -10,7 +10,7 @@ class V1::PostsController < ApplicationController
 
     # POST /v1/posts
     def create
-        @post = Post.new(post_params)
+        @post = Post.create(post_params)
         if @post.save
             render json: @post, status: :created
         else
@@ -44,7 +44,8 @@ class V1::PostsController < ApplicationController
     # Extracts the parameters for creating the post instance.
     # Required parameters include the title, body, upvotes and the current user id
     def post_params
-        params.permit(:title, :body, :upvotes, :user_id)
+        defaults = { user_id: current_user.id }
+        params.permit(:title, :body, :upvotes, :user_id).reverse_merge(defaults)
     end
 
     # Finds the user instance by the specified user id.
