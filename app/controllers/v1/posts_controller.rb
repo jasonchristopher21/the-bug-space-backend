@@ -14,14 +14,14 @@ class V1::PostsController < ApplicationController
         if @post.save
             render json: @post, status: :created
         else
-            render json: { errors: @post.errors.full_messages }, status: 503
+            render json: { errors: @post.errors.full_messages }, status: :unprocessable_entity
         end
     end
 
     # PUT /v1/posts/:id
     def update
         unless @post.update(post_params)
-            render json: { errors: @post.errors.full_messages }, status: 503
+            render json: { errors: @post.errors.full_messages }, status: :unprocessable_entity
         end
     end
 
@@ -48,7 +48,7 @@ class V1::PostsController < ApplicationController
         params.permit(:title, :body, :upvotes, :user_id).reverse_merge(defaults)
     end
 
-    # Finds the user instance by the specified user id.
+    # Finds the post instance by the specified post id.
     def find_post
         @post = Post.find(params[:id])
     end

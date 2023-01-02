@@ -19,7 +19,7 @@ class V1::UsersController < ApplicationController
         if @user.save
             render json: @user, status: :created
         else
-            render json: { errors: @user.errors.full_messages }, status: 503
+            render json: { errors: @user.errors.full_messages }, status: :unprocessable_entity
         end
     end
 
@@ -28,7 +28,7 @@ class V1::UsersController < ApplicationController
     # PUT /v1/users/:id
     def update
         unless @user.update(user_params)
-            render json: { errors: @user.errors.full_messages }, status: 503
+            render json: { errors: @user.errors.full_messages }, status: :unprocessable_entity
         end
     end
 
